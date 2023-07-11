@@ -1,8 +1,12 @@
 import './App.css';
+import Form from './components/Form/Form';
 
 function App() {
   return (
-    <h1>Gerenciador de senhas</h1>
+    <div>
+      <h1>Gerenciador de senhas</h1>
+      <Form />
+    </div>
   );
 }
 

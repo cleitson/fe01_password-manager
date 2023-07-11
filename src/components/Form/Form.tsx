@@ -17,7 +17,7 @@ function Form() {
         URL
         <input type="text" id="Url" />
       </label>
-      <button>Cadastrar!</button>
+      <button>Cadastrar</button>
       <button>Cancelar</button>
     </form>
   );

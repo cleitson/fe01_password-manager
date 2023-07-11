@@ -1,6 +1,13 @@
-function Form() {
+type FormProp = {
+  handleShow: () => void;
+};
+
+function Form({ handleShow }: FormProp) {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
   return (
-    <form>
+    <form onSubmit={ onSubmit }>
       <label htmlFor="nameService">
         Nome do serviço
         <input type="text" id="nameService" />
@@ -18,7 +25,7 @@ function Form() {
         <input type="text" id="Url" />
       </label>
       <button>Cadastrar</button>
-      <button>Cancelar</button>
+      <button onClick={ handleShow }>Cancelar</button>
     </form>
   );
 }

@@ -1,13 +1,8 @@
 import { useState } from 'react';
+import { AccountType } from '../../Types/Types';
 
 type FormProp = {
   handleShow: () => void;
-};
-type InitialStateProp = {
-  service: string,
-  login: string,
-  password: string,
-  url: string,
 };
 
 function Form({ handleShow }: FormProp) {
@@ -20,8 +15,9 @@ function Form({ handleShow }: FormProp) {
   const invalidClass = 'invalid-password-check';
   const validClass = 'valid-password-check';
 
-  const [formData, setFormData] = useState<InitialStateProp>(initialState);
+  const [formData, setFormData] = useState<AccountType>(initialState);
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
+  const { service, login, password, url } = formData;
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement |
   HTMLSelectElement | HTMLTextAreaElement>) {
@@ -35,11 +31,10 @@ function Form({ handleShow }: FormProp) {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setFormData(formData);
     setFormData(initialState);
     console.log(formData);
   };
-
-  const { service, login, password, url } = formData;
 
   const senhaRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
   const isValidPassword: boolean = senhaRegex.test(password);

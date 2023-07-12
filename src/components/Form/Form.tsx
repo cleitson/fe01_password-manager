@@ -1,55 +1,24 @@
-import { useState } from 'react';
 import { AccountType } from '../../Types/Types';
 
 type FormProp = {
+  formData: AccountType;
   handleShow: () => void;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement |
+  HTMLSelectElement>) => void;
+  onSubmit:(event: React.FormEvent<HTMLFormElement>) => void;
+  buttonDisable: boolean;
 };
 
-function Form({ handleShow }: FormProp) {
-  const initialState = {
-    service: '',
-    login: '',
-    password: '',
-    url: '',
-  };
-  const invalidClass = 'invalid-password-check';
-  const validClass = 'valid-password-check';
-
-  const [formData, setFormData] = useState<AccountType>(initialState);
-  const [buttonDisable, setButtonDisable] = useState<boolean>(true);
+function Form(props: FormProp) {
+  const { formData, handleChange, handleShow, onSubmit, buttonDisable } = props;
   const { service, login, password, url } = formData;
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement |
-  HTMLSelectElement | HTMLTextAreaElement>) {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    isValidForm();
-  }
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setFormData(formData);
-    setFormData(initialState);
-    console.log(formData);
-  };
-
-  const senhaRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
-  const isValidPassword: boolean = senhaRegex.test(password);
 
   const symbolRegex = /^(?=.*[@$!%*#?&])/;
   const validSymbol:boolean = symbolRegex.test(password);
   const letterNumberRegex = /^(?=.*[a-zA-Z])(?=.*\d)/;
   const validLetterNumeber:boolean = letterNumberRegex.test(password);
-
-  function isValidForm() {
-    if (service.length > 0 && login.length > 0 && isValidPassword) {
-      setButtonDisable(false);
-    }
-  }
-
+  const invalidClass = 'invalid-password-check';
+  const validClass = 'valid-password-check';
   return (
     <form onSubmit={ onSubmit }>
       <label htmlFor="nameService">

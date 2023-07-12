@@ -3,8 +3,12 @@ import lockerImage from '../../images/locker-img.svg';
 import linkImage from '../../images/link-img.svg';
 import trashImage from '../../images/trash-img.svg';
 
-function Accounts(account : AccountType) {
-  const { service, login, password, url } = account;
+type AccountsProp = {
+  formDataSubmited: AccountType
+};
+
+function Accounts({ formDataSubmited }: AccountsProp) {
+  const { service, login, password, url } = formDataSubmited;
   return (
     <div>
       <div>

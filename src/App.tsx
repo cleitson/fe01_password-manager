@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './App.css';
 import { AccountType, AccountTypeWithId } from './Types/Types';
 import Form from './components/Form/Form';
-import Accounts from './components/Accouts/Accounts';
 import lockerImage from './images/locker-img.svg';
 import linkImage from './images/link-img.svg';
 import trashImage from './images/trash-img.svg';
@@ -18,7 +17,6 @@ function App() {
   const [formData, setFormData] = useState<AccountType>(initialState);
   const [formDataSubmited, setFormDataSubmited] = useState<AccountTypeWithId[]>([]);
   const [buttonDisable, setButtonDisable] = useState<boolean>(true);
-  // const { service, login, password, url } = formDataSubmited;
 
   const senhaRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
   const isValidPassword: boolean = senhaRegex.test(formData.password);
@@ -36,6 +34,7 @@ function App() {
     });
     isValidForm();
   };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const id = Date.now();
@@ -43,11 +42,12 @@ function App() {
     setFormData(initialState);
     handleShow();
   };
-
+  const handleDelete = (id:number) => {
+    setFormDataSubmited(formDataSubmited.filter((user) => user.id !== id));
+  };
   const handleShow = () => {
     setShowForm(!showForm);
   };
-  console.log(formDataSubmited);
 
   return (
     <main>
@@ -65,29 +65,33 @@ function App() {
       {
         formDataSubmited.length > 0 ? (formDataSubmited.map((acc) => (
           <div key={ acc.id }>
-            <div>
+            <span>
               <img src={ lockerImage } alt={ acc.service } />
               { acc.service }
               <a href={ acc.url } target="_blank" rel="noreferrer">
                 <img src={ linkImage } alt="Link do serviço" />
               </a>
-            </div>
+            </span>
             <div>
               <p>
-                Login
-                {' '}
+                <span>Login</span>
                 { acc.login }
               </p>
             </div>
             <div>
+              <span>Senha</span>
               <p>
-                Senha
-                {' '}
                 { acc.password }
               </p>
             </div>
             <div>
-              <img src={ trashImage } alt="Excluir" />
+              <button
+                data-testid="remove-btn"
+                onClick={ () => handleDelete(Number(acc.id)) }
+              >
+                <img src={ trashImage } alt="Excluir" />
+              </button>
+
             </div>
           </div>
         )))

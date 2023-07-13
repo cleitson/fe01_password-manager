@@ -5,12 +5,12 @@ type FormProp = {
   handleShow: () => void;
   handleChange: (event: React.ChangeEvent<HTMLInputElement |
   HTMLSelectElement>) => void;
-  onSubmit:(event: React.FormEvent<HTMLFormElement>) => void;
+  handleSubmit:(event: React.FormEvent<HTMLFormElement>) => void;
   buttonDisable: boolean;
 };
 
 function Form(props: FormProp) {
-  const { formData, handleChange, handleShow, onSubmit, buttonDisable } = props;
+  const { formData, handleChange, handleShow, handleSubmit, buttonDisable } = props;
   const { service, login, password, url } = formData;
 
   const symbolRegex = /^(?=.*[@$!%*#?&])/;
@@ -19,8 +19,9 @@ function Form(props: FormProp) {
   const validLetterNumeber:boolean = letterNumberRegex.test(password);
   const invalidClass = 'invalid-password-check';
   const validClass = 'valid-password-check';
+
   return (
-    <form onSubmit={ onSubmit }>
+    <form onSubmit={ (event) => handleSubmit(event) }>
       <label htmlFor="nameService">
         Nome do serviço
         <input

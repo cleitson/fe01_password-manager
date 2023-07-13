@@ -7,14 +7,17 @@ type AccountsProp = {
   formDataSubmited: AccountType
 };
 
-function Accounts({ formDataSubmited }: AccountsProp) {
+function Accounts(prop: AccountsProp) {
+  const { formDataSubmited } = prop;
   const { service, login, password, url } = formDataSubmited;
   return (
     <div>
       <div>
         <img src={ lockerImage } alt={ service } />
         { service }
-        <a href={ url }><img src={ linkImage } alt="Link do serviço" /></a>
+        <a href={ url } target="_blank" rel="noreferrer">
+          <img src={ linkImage } alt="Link do serviço" />
+        </a>
       </div>
       <div>
         <p>
